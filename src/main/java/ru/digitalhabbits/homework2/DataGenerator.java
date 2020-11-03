@@ -13,6 +13,8 @@ import static org.slf4j.LoggerFactory.getLogger;
 public class DataGenerator {
 
     private final Logger logger = getLogger(DataGenerator.class);
+    private final static int STRINGS_COUNT_BOUND = 100;
+    private final static int LETTERS_COUNT_BOUND = 15;
     private final char[] latinAlphabet = "abcdefghijklmnopqrstuvwxyz".toCharArray();
     private final static String RESOURCES_DIR = System.getProperty("user.dir") + "/rsc/";
     private final static String FILE_EXT = ".txt";
@@ -31,10 +33,10 @@ public class DataGenerator {
     }
 
     public void generate() throws IOException {
-        var count = new Random().nextInt(1000) + 1;
+        var count = new Random().nextInt(STRINGS_COUNT_BOUND) + 1;
         var builder = new StringBuilder();
         for (int i = 0; i < count; i++) {
-            var strSize = new Random().nextInt(15) + 1;
+            var strSize = new Random().nextInt(LETTERS_COUNT_BOUND) + 1;
             builder.append(i + 1)
                     .append(')')
                     .append(" ")

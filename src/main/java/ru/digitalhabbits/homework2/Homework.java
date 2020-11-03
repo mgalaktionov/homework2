@@ -24,10 +24,10 @@ public class Homework {
             logger.error("IOException was cought during generation of input data, programm wil exit");
             System.exit(-1);
         }
-        final File processingFilePath = generator.getProcessingFile();
-        final File resultFilePath = generator.getResultFile();
-//        new FileProcessor()
-//                .process(processingFileName, resultFileName);
+        final File processingFile = generator.getProcessingFile();
+        final File resultFile = generator.getResultFile();
+        new FileProcessor()
+                .process(processingFile, resultFile);
     }
 
     @Nonnull
