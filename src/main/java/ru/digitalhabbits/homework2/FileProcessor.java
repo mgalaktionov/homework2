@@ -20,7 +20,8 @@ public class FileProcessor {
 
         final File file = new File(processingFileName);
         // TODO: NotImplemented: запускаем FileWriter в отдельном потоке
-
+        Thread fileWriterThread = new Thread(new FileWriter());
+        fileWriterThread.start();
         try (final Scanner scanner = new Scanner(file, defaultCharset())) {
             while (scanner.hasNext()) {
                 // TODO: NotImplemented: вычитываем CHUNK_SIZE строк для параллельной обработки
