@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
+import java.util.concurrent.Exchanger;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -32,7 +33,7 @@ public class FileProcessor {
             var counter = 0;
             var taskList = new ArrayList<Future<Pair<String, Integer>>>();
 
-
+            Exchanger<String> exchanger = new Exchanger<>();
             while (scanner.hasNext()) {
                 if(counter < CHUNK_SIZE){
                     taskList.add(executor.submit(new LineProcessingTask(scanner.next())));
@@ -46,6 +47,8 @@ public class FileProcessor {
                     for(Future<Pair<String, Integer>> future: taskList){
                         var result = future.get();
                         //logger.info("Processing result is '{}'", result);
+                        var exchangeString = exchanger.exchange(String.valueOf(result));
+                        new Thread(new FileWriter(exchanger, resultFile)).start();
                     }
                     logger.info("Clearing task list");
                     taskList.clear();
